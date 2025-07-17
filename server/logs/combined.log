@@ -1,0 +1,4 @@
+[2025-07-17T19:42:06.661Z] INFO: POST /api/auth/register
+[2025-07-17T19:42:21.340Z] INFO: POST /api/auth/login
+[2025-07-17T19:42:23.449Z] INFO: GET /api/users/profile
+[2025-07-17T19:42:38.396Z] INFO: GET /api/users/profile
