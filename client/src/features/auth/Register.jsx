@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import { registerService } from '../../services/authService';
+
 
 const Register = () => {
+
     const navigate = useNavigate();
 
     const [form, setForm] = useState({
@@ -18,12 +20,10 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:3000/api/auth/register', form, { withCredentials: true });
-            alert('Registration successful!');
-            console.log(res.data);
+            const res = await registerService(form);
             navigate('/login');
         } catch (err) {
-            alert(err.response?.data?.message || 'Registration failed. Please try again.');
+            console.error('Registration Failed:', err.response?.data?.message || err.message);
         }
     };
 

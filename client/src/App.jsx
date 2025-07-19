@@ -1,29 +1,54 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route } from "react-router-dom";
+
+// Layout
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Profile from './pages/Profile';
-import Dashboard from './pages/Dashboard';
-import Home from './pages/Home';
+
+// Pages
+import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
+import Login from "./features/auth/Login";
+import Register from "./features/auth/Register";
+import Profile from "./features/user/Profile";
+
+// Route Guards
+import ProtectedRoute from "./routes/ProtectedRoute";
 
 function App() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Navbar />
-      <main className="animate-slide-up flex-grow">
+
+      <main className="flex-grow">
         <Routes>
+          {/* Public Routes */}
           <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/register" element={<Register />} />
+
+          {/* Protected Routes */}
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </main>
+
       <Footer />
     </div>
   );
 }
 
 export default App;
-

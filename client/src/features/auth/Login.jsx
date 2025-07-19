@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-
+import { loginService } from '../../services/authService';
 
 const Login = () => {
 
@@ -19,19 +18,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:3000/api/auth/login', form, { withCredentials: true });
-
-      // Store token in localStorage
-      if (res.data.token) {
-        localStorage.setItem('token', res.data.token);
-      }
-
-      alert('Login successful');
-      navigate('/profile');
-      // console.log(res.data);
-
-    } catch (error) {
-      alert(error.response?.data?.message || 'Login failed');
+      const res = await loginService(form);
+      navigate('/dashboard');
+    } catch (err) {
+      console.error('Login Failed:', err.response?.data?.message || err.message);
     }
   };
 
@@ -132,8 +122,8 @@ const Login = () => {
             <div className="text-center">
               <p className="text-sm text-gray-600">
                 Don't have an account?{' '}
-                <Link 
-                  to="/register" 
+                <Link
+                  to="/register"
                   className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors duration-200"
                 >
                   Sign up here
